@@ -1,0 +1,49 @@
+%to produce a pdf, you type: pdflatex thissample
+\input{00PRELIMS}  %loads 00PRELIMS.tex, which also loads zrogram.tex (all in same directory)
+
+Let $T$ be a not-necessarily binary tree where each vertex $v$ in $T$ has the two fields $v.min$ and $v.dat$. 
+Suppose that the $.dat$ field of every vertex in $T$ already stores a number.
+
+\noindent
+{\bf Problem:} Present an efficient algorithm that for each vertex $v$ in $T$ stores in $v.min$ the minimum of the $.dat$ values in
+the subtree rooted by $v$ (including the value $v.dat$).
+
+\noindent
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Global the tree $T$: its vertex set with preloaded $.dat$ values, and its child lists;\qq
+\phantom{\Global }each vertex $v$ in $T$ has the field $v.min$ and preloaded field $v.dat$;\qq
+\Function{$MinT$}{;; $v$};\qq     %The ;; is part of the pseudocode syntax, and is explained in Ch 2
+\OUTPUT: $v.min$ will equal the minimum of all $.dat$ values in $v$'s subtree;\qq
+$v.min\leftarrow v.dat$;\Comment{a preorder initialization}\qq
+\Foreach child ${w}$ of $v$ \Do\qq
+$v.min\leftarrow \min\{v.min,\,MinT(w)\}$\Comment{use solution for subtree rooted by $w$ to update $v.min$}\qq
+\Endfor;\qq
+\Return($v.min$)\qq
+\Fini %The \Fini ends the code environment and prints the function/procedure name if used. It also adds the ;
+
+The program is initiated with the call $y\leftarrow MinT(T)$.
+
+
+These problems and solutions illustrate a fundamental property that is typical of many DFS-based solutions to real problems, and more. The
+problem description will usually be defined in terms 
+of data or records that are in some sense the same for each record.
+(For each vertex $v$, store in $v.min$ the smallest value in {\bf any of the many vertices} in the subtree $\cdots$.)
+But instead of implementing a ``democratic'' trip to poll each vertex in the tree, the problem was translated into a hierarchical characterization
+that used just the local-root vertex $v$ and the subtree-solutions for each of child $w$ of $v$.
+
+\noindent
+\Prog\qq
+\Global the tree $T$: its vertex set with preloaded $.dat$ values, and its child lists;\qq
+\Procedure{$MinT$}{;; $v$};\qq
+\OUTPUT: $v.min$ will equal the minimum of all $.dat$ values in $v$'s subtree;\p
+%                                           the \p starts a new line with an incremented line number
+$v.min\leftarrow v.dat$;\Comment{a preorder initialization}\p
+\Foreach child ${w}$ of $v$ \Do\p
+$MinT(w)$;\p
+$v.min\leftarrow \min\{v.min,\,w.min\}$\Comment{use solution for subtree rooted by $w$ to update $v.min$}\p
+\Endfor; \qq
+\Fini
+
+This program is initiated with the call $MinT(T)$.
+
+\end{document}
