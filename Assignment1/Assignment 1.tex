@@ -1,0 +1,365 @@
+%to produce a pdf, you type: pdflatex thissample
+\input{../latex-sample/00PRELIMS}  %loads 00PRELIMS.tex, which also loads zrogram.tex (all in same directory)
+
+
+\title{Assignment 1}
+\date{2017-09-11}
+\author{Xiaoyu Xue}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+\maketitle
+
+\section{Ex 1.1}
+
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth, angle = -90]{1.jpeg}
+  \caption{Exe 1.1 Solution.}
+  \label{fig:solution 1.1}
+\end{figure}
+
+\section{Ex 1.2}
+
+\subsection{ }
+Beginners will find the smallest ring first and move it to either A or C. And then find the second small one and figure out which pole should move to.
+\subsection{}
+Suppose I have a n-1 DTH sovler called $minorDTHSolver$, I will test if pole B contains the ring n first. If it is true, move n-1 rings to pole B and problem solved. 
+If ring n is on pole A, I will move all n-1 rings to pole C with the solver and then move the ring n from pole A to B, then move all n-1 rings to B with the solver. If ring n is on pole C, it's the same.
+
+\subsection{}
+\noindent
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$DTH$}{n, A, B, C}; \qq  %The ;; is part of the pseudocode syntax, and is explained in Ch 2
+\If n equals 1 \Then \qq
+%init situation
+\If $IsItThere(1, A)$ equals True \Then\qq
+move ring 1 from the top of A to the top of B\qq
+\Elseif $IsItThere(1, C)$ equals True \Then\qq
+move ring 1 from the top of C to the top of B\qq
+\Endif\qq
+%
+\Else\qq
+\If $IsItThere(n, A)$ equals True \Then\qq
+DTH(n-1, A, C, B)\qq
+move ring n from the top of A to the top of B\qq
+DTH(n-1, A, B, C)\qq
+\Elseif $IsItThere(n, C)$ equals True \Then\qq
+DTH(n-1, B, A, C)\qq
+move ring n from the top of C to the top of B\qq
+DTH(n-1, A, B, C)\qq
+\Elseif $IsItThere(n, B)$ equals True \Then\qq
+DTH(n-1, A, B, C)\qq
+\Endif\qq
+\Endif\qq
+\Fini %The \Fini ends the code environment and prints the function/procedure name if used. It also adds the ;
+
+\subsection{}
+\noindent
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$DTH$}{n, A, B, C}; \qq  %The ;; is part of the pseudocode syntax, and is explained in Ch 2
+\If n equals 1 \Then \qq
+%init situation
+\If $IsItThere(1, A)$ equals True \Then\qq
+move ring 1 from the top of A to the top of B\qq
+\Elseif $IsItThere(1, C)$ equals True \Then\qq
+move ring 1 from the top of C to the top of B\qq
+\Endif\qq
+%
+\Else\qq
+\If $IsItThere(n, A)$ equals True \Then\qq
+DTH(n-1, A, C, B)\qq
+move ring n from the top of A to the top of B\qq
+TowersOfHanoi(n-1, C, B, A)\qq
+\Elseif $IsItThere(n, C)$ equals True \Then\qq
+DTH(n-1, B, A, C)\qq
+move ring n from the top of C to the top of B\qq
+TowersOfHanoi(n-1, A, B, C)\qq
+\Elseif $IsItThere(n, B)$ equals True \Then\qq
+DTH(n-1, A, B, C)\qq
+\Endif\qq
+\Endif\qq
+\Fini %The \Fini ends the code environment and prints the function/procedure name if used. It also adds the ;
+
+
+\section{Ex 1.3}
+
+\subsection{}
+Ring 1 (the smallest)
+
+\subsection{}
+How can I use the pole D to make the TowersOfHanoi  procedure more efficient in $EACH$ recursive round. Make the size of subproblem as small as possible.
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$DPoleTH$}{n, A, B, C, D}; \qq 
+\If n equals 1 \Then\qq
+move ring 1 from the top of A to the top of B\qq
+\Elseif n equals 2 \Then\qq
+move ring 1 from the top of A to the top of D\qq
+move ring 2 from the top of A to the top of B\qq
+move ring 1 from the top of D to the top of B\qq
+\Else\qq
+DPoleTH(n-2, A, C, B, D);\qq
+move ring n-1 from A to D;\qq
+move ring n from A to B;\qq
+move ring n-1 from D to B;\qq
+DPoleTH(n-1, C, B, A, D)\qq
+\Endif\qq
+\Fini 
+
+\section{EX 1.4}
+
+\subsection{}
+Ring n's top sides is white, the other n-1 rings' top sides color are red cause they are flipped twice.
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$RTH$}{n, A, B, C}; \qq 
+\If n equals 1 \Then\qq
+move ring 1 from the top of A to the top of C\qq
+move ring 1 from the top of C to the top of B\qq
+\Else\qq
+RTH(n-1, A, C, B);\qq
+move ring n from the top of A to the top of B;\qq
+RTH(n-1, C, B, A)\qq
+\Endif\qq
+\Fini 
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$WTH$}{n, A, B, C}; \qq 
+\If n equals 1 \Then\qq
+move ring 1 from the top of A to the top of B\qq
+\Else\qq
+WTH(n-1, A, C, B);\qq
+move ring n from the top of A to the top of B;\qq
+WTH(n-1, C, A, B)\qq
+WTH(n-1, A, B, C)\qq
+\Endif\qq
+\Fini
+
+
+\section{EX 1.5}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$CTHOneJump$}{n, A, B, C}; \qq 
+\If n equals 1 \Then\qq
+move ring 1 from the top of A to the top of B\qq
+\Else\qq
+CTHOneJump(n-1, A, B, C);\qq
+CTHOneJump(n-1, B, C, A);\qq
+move ring n from the top of A to the top of B;\qq
+CTHOneJump(n-1, C, A, B);\qq
+CTHOneJump(n-1, A, B, C);\qq
+\Endif\qq
+\Fini
+
+\section{EX 1.6}
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$GColor$}{n, Adj[1..n], ColorOf[1..n] }; \qq 
+\INPUT: the vertices 1,2,..., n, where for each $j$, $Adj[j]$ is a list of $j$'s neighbouring vertices;\qq
+\OUTPUT: $Color[j]$ is the color assigned to vertex j\p
+Create empty sets of $Colorable$\p
+Create an array MostRecentNeighborColor[1..n] with initial value is NIL
+Copy the n vertices into $Colorable$\p
+\While $Colorable$ not empty \Do\p
+Select a new color for this new round and call it c;\p
+\Foreach vertex $v$ in the set $Colorable$ \Do\p
+\If $MostRecentNeighborColor[v]$ not equals $c$ \Then\p
+$ColorOf[v] \leftarrow c$;\p
+Remove $v$ from $Colorable$;\p
+\Foreach vertex $w$ in the list $Adj[v]$ \Do\p
+$MostRecentNeighborColor[w] \leftarrow c$\p
+\Endfor\p
+\Endif\p
+\Endfor\p
+\Endwhile\qq
+\Fini
+
+\subsection{}
+
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$GColor$}{n, Adj[1..n], ColorOf[1..n] }; \qq 
+\INPUT: the vertices 1,2,..., n, where for each $j$, $Adj[j]$ is a list of $j$'s neighbouring vertices;\qq
+\OUTPUT: $Color[j]$ is the color assigned to vertex j\p
+Create an array $Color[1..m]$ with initial value is 0\p
+\While $Colorable$ not empty \Do\p
+Select a new color for this new round and call it c;\p
+\Foreach vertex $i$  \Do\p
+\Foreach vertex $j$ in $Adj[i]$ \Do\p
+$Color[ColorOf[j]] \leftarrow 1$\p
+\Endfor\p
+\Foreach $c$ in Color[m] \Do\p
+\If $c$ equals 0 \Then\p
+$ColorOf[i] \leftarrow c$\p
+\Endif\p
+\Foreach vertex $j$ in $Adj[i]$ \Do\p
+$Color[ColorOf[j]] \leftarrow 0$\p
+\Endfor\p
+
+\Endfor\p
+\Endwhile\qq
+\Fini
+
+\subsection{}
+As we can see there are 3 $Foreach$ loop with each vertex, if they traverse all neighbor of vertex $v$ then there are maximum  3*13 array access.
+At  last each vertex should be colored which needs two array access.
+Hence, the pseudocode solve all subgoals in no more than 3*13+2 array access.
+
+\section{EX 1.7}
+\subsection{}
+\Prog\p     % \Prog starts the code environment. The \qq starts a new line without a line number
+$y \leftarrow Y$;\p
+$m \leftarrow M$;\p
+$temp \leftarrow y.next$\p
+$y.next \leftarrow m$\p
+$m \leftarrow y$\p
+$y \leftarrow temp$\qq
+\Fini
+
+\subsection{}
+\Prog     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$Reverse$}{Y}; \qq 
+$p \leftarrow Y$;\p
+$q \leftarrow Y.next$\p
+p.next = Nil;\p
+\While q not equals Nil \Do\p
+$temp \leftarrow q.next$;\p
+$q.next \leftarrow p$;\p
+$p \leftarrow q$;\p
+$q \leftarrow temp$;\p
+\Endwhile\p
+$Y \leftarrow p$;\qq
+\Fini
+
+
+\subsection{}
+
+Reverse the list.\\
+Use the Part 0 solution change each record's dat;\\
+Reverse the list again;
+
+
+\subsection{}
+Iterate all record and get the sum of all record's data, called SumOfAll.\\
+Iterate all record, calculate the sum of all precede records' dat called SumOfPre, modify the each record's dat with SumOfAll - SumOfPre. Which is the sum of succeed records' dat.
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$SumSucWithReverseList$}{Y}; \p
+$Reverse(Y)$;\p
+$SumPre(Y)$;\p
+$Reverse(Y)$;\qq
+\Fini
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$SumPreWithRecur$}{Y, sum}; \p
+$p \leftarrow Y$;\p
+$sum \leftarrow sum + p.dat$;\p
+$p.dat \leftarrow sum$;\p
+\If $p.next$ not equals Nil \Then\p
+$SumPreWithRecur(p.next, sum)$;\p
+\Endif\qq
+\Fini
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Function{$SumSucWithRecur$}{$Y$}; \p
+$p \leftarrow Y$;\p
+\If $p.next $equals Nil \Then\p
+\Return($p.dat$) ;\p
+\Else\p
+$p.dat \leftarrow SumSucWithRecur(p.next) + p.dat$;\p
+\Endif\qq
+\Fini
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$TestCircle$}{Y}; \p
+$p \leftarrow Y.next$;\p
+$q \leftarrow Y.next.next$;\p
+\While $q$ not equals $p$ \Do\p
+\If $q$ equals Nil \Then\p
+\Return($False$)\p
+\Endif\p
+$p \leftarrow p.next;$\p
+$q \leftarrow q.next.next;$\p
+\Endwhile\p
+\Return($True$);\qq
+\Fini
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$CircleSize$}{Y}; \p
+$cnt1 \leftarrow 1$;\p
+$p \leftarrow Y.next$;\p
+$q \leftarrow Y.next.next$;\p
+\While $q$ not equals $p$ \Do\p
+$p \leftarrow p.next$;\p
+$q \leftarrow q.next.next$;\p
+$cnt1 \leftarrow cnt1 + 1$;\p
+\Endwhile\p
+\Return($cnt1$);\qq
+\Fini
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$CircleLeaderSize$}{Y}; \p
+$cnt1 \leftarrow 1$;\p
+$cnt2 \leftarrow 0$;\p
+$p \leftarrow Y.next$;\p
+$q \leftarrow Y.next.next$;\p
+$r \leftarrow Y$;\p
+\While q not equals p \Do\p
+$p \leftarrow p.next$;\p
+$q \leftarrow q.next.next$;\p
+$cnt1 \leftarrow cnt1 + 1$;\p
+\Endwhile\p
+\While r not equals p \Do\p
+$p \leftarrow p.next$;\p
+$r \leftarrow r.next$;\p
+$cnt2 \leftarrow cnt2 + 1$;\p
+\Endwhile\p
+\Return($cnt1, cnt2$);\qq
+\Fini
+
+
+\section{EX 1.12}
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$SloTH$}{n, A, B, C}; \qq 
+\If n equals 1 \Then\qq
+move ring 1 from the top of A to the top of C\qq
+move ring 1 from the top of C to the top of B\qq
+\Else\qq
+SloTH(n-1, A, B, C);\qq
+move ring n from the top of A to the top of C;\qq
+SloTH(n-1, B, A, C);\qq
+move ring n from the top of C to the top of B;\qq
+SloTH(n-1, A, B, C);\qq
+\Endif\qq
+\Fini
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$SloTH$}{n, A, B, C}; \qq 
+\OUTPUT: the $n$ rings are moved from A to B in a way where all legal ring configurations are achieved for $n$ rings on poles A, B and C, but just once for each configuration;\p
+\If n equals 1 \Then\p
+move ring 1 from the top of A to the top of C\p
+move ring 1 from the top of C to the top of B\p
+\Else\p
+SloTH(n-1, A, B, C); \Comment{so with ring $n$ sitting on A, rings 1 through n - 1 have achieve all possible legal configurations on poles A, B and C with each configuration achieved just once}\p
+move ring n from the top of A to the top of C;\p
+SloTH(n-1, B, A, C); \Comment{so with ring $n$ sitting on C, rings 1 through n - 1 have achieve all possible legal configurations on poles A, B and C with each configuration achieved just once}\p
+move ring n from the top of C to the top of B;\p
+SloTH(n-1, A, B, C); \Comment{so with ring $n$ sitting on B, rings 1 through n - 1 have achieve all possible legal configurations on poles A, B and C with each configuration achieved just once}\p
+\Endif\qq
+\Fini
+
+
+
+\end{document}

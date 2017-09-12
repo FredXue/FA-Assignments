@@ -13,6 +13,8 @@
 %%%\documentclass[12pt,draft, makeidx]{book} \usepackage[dvips]{graphics} \usepackage[final]{graphicx} \usepackage{epsfig}
 %%%\\documentclass[12pt,draft, makeidx]{book} \usepackage[dvips,draft]{graphics} \usepackage[draft]{graphicx} \usepackage[draft]{epsfig}
 %USE COMMENT BELOW INSTEAD
+
+
 \usepackage[dvips]{color}
 \usepackage[T1]{fontenc} 
 %\usepackage{ae,aecompl} 
@@ -222,7 +224,7 @@
 \let\sl\it
 \def\emph#1{\textit{#1}\/}
 \def\wavearrow{\rightarrow}
-\input{zrogram}
+\input{../latex-sample/zrogram}
 
 \def\ProbD#1{\par\hangindent=\templengthp\hangafter=1\noindent\hbox to \templength{\underline{Definition}}:~The {\bf #1} problem.}
 \def\Question{\par\vspace{-1ex}\par\hangindent=\templengthp\hangafter=1\noindent\hbox to\templength{\hfil\underline{Question}}:~}
@@ -264,4 +266,3 @@
 \pagenumbering{arabic}
 \fancyhead[OL]{\hbox{\hspace{3.5in}\thepage}}  %the shift is a quick and dirty fix
 \fancyhead[EL]{\hbox{\hspace{-3.5in}\thepage}} %quick and dirty fix
-\begin{document}
