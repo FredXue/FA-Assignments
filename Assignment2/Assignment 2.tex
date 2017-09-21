@@ -1,0 +1,358 @@
+%to produce a pdf, you type: pdflatex thissample
+\input{../latex-sample/00PRELIMS}  %loads 00PRELIMS.tex, which also loads zrogram.tex (all in same directory)
+
+
+\title{FA HW 2}
+\date{2017-09-20}
+\author{Xiaoyu Xue}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+\maketitle
+
+\section{Ex 2.1}
+a) 51, 6, 3, 5, 14, 7, 11\\
+b) 3, 5, 6, 7, 11, 14, 51\\
+c) 5, 3, 11, 7, 14, 6, 51\\
+
+\section{Ex 2.30}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Global the tree T with vertex name 1...n; child array $child[j,*]$\qq
+\Procedure{$postDFS$}{i}; \qq 
+\If child[i,0] = 0 \Then\qq
+ print(i);\qq
+\Else\qq
+\Foreach int j = 1; j <= child[i, 0]; j++ \Do\qq
+postDFS(child[i, j]);\qq
+print(i);\qq
+\Endfor\qq
+\Endif\qq
+\Fini 
+
+\section{Ex 2.2}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Function{$evaluateExpTree$}{vertex v}; \p
+\If $v$ is a leaf \Then\p
+ \Return($v.val$)\p
+\Else\p
+\Return(eval(v.op, evaluateExpTree(v.left), evaluateExpTree(v.right))); \p
+\Endif\qq
+\Fini 
+
+\section{Ex 2.3}
+
+\subsection{}
+\Prog\qq  
+\Function{$minVal$}{vertex v}; \p
+$v.small \leftarrow v.val;$\p
+\Foreach child $x$ of $v$ \Do\p
+$v.small \leftarrow min(v.small, minVal(x));$\p
+\Endfor\p
+\Return($v.small$);\qq
+\Fini 
+
+\subsection{}
+\Prog\qq  
+\Function{$minValVertex$}{vertex v}; \p
+$v.small \leftarrow v.val;$\p
+$v.which \leftarrow v;$\p
+\Foreach child $x$ of $v$ \Do\p
+$w \leftarrow minValVertex(x);$\p
+\If $v.small$ > $w.val$  \Then\p
+$v.small \leftarrow w.val;$\p
+$v.which \leftarrow w;$\p
+\Endif\p
+\Endfor\p
+\Return($v.which$)\qq
+\Fini 
+
+
+ \section{Ex 2.4}
+ 
+ \subsection{}
+  \Prog\qq 
+\Procedure{$postDFS$}{T}; \p
+\Foreach child v of t \Do\p
+postDFS(v);\p
+\Endfor\p
+print(i);\qq
+\Fini 
+
+\subsection{}
+
+\Prog\qq % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$Rotate$}{T, X}; \p
+\Foreach child v of t \Do\p
+Rotate(v, X);\p
+\Endfor\p
+$temp \leftarrow X;$\p
+$X \leftarrow T.val;$\p
+$T.val \leftarrow temp;$\qq
+\Fini 
+
+
+ \section{Ex 2.5}
+\Prog\qq
+ \Return($eval(x, StackEval(;; L), StackEval(;; L))$);
+ \Fini
+ \section{Ex 2.6}
+ 
+ \subsection{}
+ 
+ S is the reverse of T
+ \subsection{}
+ 
+ Postorder DFS Print the vertex from left most without children to the root, but the preorder DFS print vertex from root to right most vertex with children.
+ 
+ \subsection{}
+ \Prog\qq % \Prog starts the code environment. The \qq starts a new line without a line number
+ \Global Stack L contain reverse postorder of exp tree; Stack M for temp storage\qq
+\Function{$iterateEval$}{}; \p
+\While L is not empty \Do\p
+$x \leftarrow PopFrom(L);$\p
+\If x is a number \Then \p
+PushInto(M, x);\p
+\Else\p
+PushInto(M, eval(x, PopFrom(M), PopFrom(M)));\p
+\Endif\p
+\Endwhile\p
+\Return($PopFrom(M)$)\qq
+\Fini 
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+ \Global Doubly Linked List L contain reverse postorder of exp tree; \qq
+ \Function{$iterateEvalList$}{}; \p
+ $p \leftarrow L;$\p
+\While $p \neq Nil$ \Do\p
+\If $p.val$ is a number \Then \p
+$p \leftarrow p.next;$\p
+\Else\p
+$p.val \leftarrow eval(x, p.prev, p.prev.prev));$\p
+$l \leftarrow p.prev;$\p
+$m \leftarrow p.prev.prev;$\p
+$p.prev \leftarrow p.prev.prev.prev;$\p
+$p.prev.next \leftarrow p;$\p
+$l.next \leftarrow Nil;$\p
+$m.prev \leftarrow Nil;$\p
+\Endif\p
+\Endwhile\p
+\Return($p.val$)\qq
+\Fini 
+
+
+\section{Ex 2.8}
+\Prog\qq  
+\Function{$countChild$}{T v}; \p
+$v.numb \leftarrow 1;$\p
+\Foreach child $x$ of $v$ \Do\p
+$v.numb \leftarrow v.numb + countChild(x);$\p
+\Endfor\p
+\Return($v.numb$)\qq
+\Fini 
+
+\section{Ex 2.9}
+\Prog\qq  
+\Function{$distSubTree$}{T v}; \p
+$v.dis \leftarrow 0;$\p
+\Foreach child $x$ of $v$ \Do\p
+$distance \leftarrow distSubTree(x) + 1;$\p
+\If $distance > v.dis$ \Then\p
+$v.dis \leftarrow distance;$\p
+\Endif\p
+\Endfor\p
+\Return($v.dis$)\qq
+\Fini 
+
+
+\section{Ex 2.10}
+\Prog\qq 
+\Function{$twoDistSubTree$}{T v}; \p
+$v.dis1 \leftarrow 0;$\p
+$v.dis2 \leftarrow -\infty;$\p
+\Foreach child $x$ of $v$ \Do\p
+$distance \leftarrow twoDistSubTree(x) + 1;$\p
+\If $distance > v.dis1$ \Then\p
+\If v.dis1 > 0 \Then\p
+$v.dis2 \leftarrow v.dis1;$\p
+\Endif\p
+$v.dis1 \leftarrow distance;$\p
+\Elseif $distance <= v.dis1$ and  $distance > v.dis2$ \Then\p
+$v.dis2 \leftarrow distance;$\p
+\Endif\p
+\Endfor\p
+\Return($v.dis1$)\qq
+\Fini 
+
+
+
+ 
+ \section{Ex 2.19}
+ \subsection{}
+ yes
+ \subsection{}
+ no
+ \subsection{}
+ 
+ \Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$Parent$}{v, pv}; \p
+\If $v \neq Nil$ \Then\p
+print(v, pv);\p
+\Endif\p
+\Foreach child $x$ of $v$ \Do\p
+Parent(x, v);\p
+\Endfor\qq
+\Fini 
+
+ Initial Procedure Call:
+  \Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$preDFS$}{}; \p
+Parent(T, Nil)\qq
+\Fini 
+ 
+ \subsection{}
+ \Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$Parent$}{v, pv}; \p
+\If $v \neq Nil$ \Then\p
+print(v, pv);\p
+\Endif\p
+Parent(v.left, v);\p
+Parent(v.right, pv);\qq
+\Fini 
+
+ Initial Procedure Call:
+  \Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$preDFS$}{}; \p
+Parent(S, Nil);\qq
+\Fini 
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$Parent$}{v, pv}; \p
+\Foreach child $x$ of $v$ \Do\p
+Parent(x, v);\p
+\Endfor\p
+\If $v \neq Nil$ \Then\p
+print(v, pv);\p
+\Endif\qq
+\Fini 
+
+ Initial Procedure Call:
+  \Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$postDFS$}{}; \p
+Parent(T, Nil);\qq
+\Fini 
+
+
+
+\subsection{}
+  \Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$Parent$}{v, pv}; \p
+Parent(v.left, v);\p
+Parent(v.right, pv);\p
+\If $v \neq Nil$ \Then\p
+print(v, pv);\p
+\Endif\qq
+\Fini 
+
+ Initial Procedure Call:
+  \Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$postDFS$}{}; \p
+Parent(S, Nil);\qq
+\Fini 
+
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$Parent$}{v}; \p
+\Foreach child $x$ of $v$ \Do\p
+Parent(x, v);\p
+print(x, v);\p
+\Endfor\qq
+\Fini 
+
+ Initial Procedure Call:
+ \Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$postDFS$}{}; \p
+Parent(T);\qq
+\Fini 
+
+
+
+\section{Ex 2.20}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$Clean$}{L}; \p
+\If $L \neq Nil$  \Then\p
+\If $L.data = 0$ \Then\p
+$Clean(L.next);$\p
+$L.next \leftarrow Nil$\p
+\Endif\p
+\If $L.next \neq Nil$  and $L.next.data = 0$ \Then\p
+$Clean(L.next);$\p
+$L.next \leftarrow L.next.next;$\p
+\Endif\p
+\Endif\qq
+\Fini\\
+Beautiful!!! 
+
+
+\section{Ex 23}
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$RecursiveSelectSort$}{l;; Data[1...n]}; \p
+$IndexofBiggest \leftarrow 1;$\p
+$Biggest \leftarrow Data[1];$\p
+\Foreach $TestDex \leftarrow 2 $  \To   $l$ \Do\p
+\If $Biggest < Data[TestDex]$ \Then\p
+$Biggest \leftarrow Data[TestDex];$\p
+$IndexOfBiggest \leftarrow TestDex;$\p
+\Endif\p
+\Endfor\p
+$Swap(Data[IndexofBiggest], Data[l]);$\p
+\If l  > 1 \Then\p
+RecursiveSelectSort(l-1;; Data[1...n]);\p
+\Endif\qq
+\Fini
+
+
+\subsection{}
+\Prog\qq     % \Prog starts the code environment. The \qq starts a new line without a line number
+\Procedure{$RecursiveSelectSort2$}{l;; Data[1...n]}; \p
+$IndexofBiggest \leftarrow 1;$\p
+$Biggest \leftarrow Data[1];$\p
+\Foreach $TestDex \leftarrow 2 $  \To   $l$ \Do\p
+\If $Biggest < Data[TestDex]$ \Then\p
+$Biggest \leftarrow Data[TestDex];$\p
+$IndexOfBiggest \leftarrow TestDex;$\p
+\Endif\p
+\Endfor\p
+\If l  > 1 \Then\p
+$Swap(Data[IndexofBiggest], Data[l]);$\p
+RecursiveSelectSort2(l-1;; Data[1...n]);\p
+$Swap(Data[l], Data[IndexofBiggest]);$\p
+\Else\p
+$Print(Data[1...n])$\p
+\Endif\qq
+\Fini
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+\end{document}
