@@ -1,0 +1,213 @@
+%to produce a pdf, you type: pdflatex thissample
+\input{../latex-sample/00PRELIMS}  %loads 00PRELIMS.tex, which also loads zrogram.tex (all in same directory)
+
+
+\title{FA HW 5}
+\date{2017-10-15}
+\author{Xiaoyu Xue}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+\maketitle
+
+\section{Ex 2.21}
+\subsection{}
+\Prog\qq
+\Global Hashmap AvailableLetters stores (l, c) pair\qq
+\Global Array Word[1...n] store letters to print\qq
+\Procedure{$DFS$}{level, k}; \p
+\If level == n+1 \Then\p
+print(Word);\p
+\Endif]\p
+\Foreach $i$ 1 \To k \Do \p
+$Word[level] \leftarrow AvailableLetters[i];$\p
+$AvailableLetters[i].c--;$\p
+\If AvailableLetters[i].c == 0 \Then\p
+Swap(AvailableLetters[i], AvailableLetters[k]);\p
+$DFS(level+1, k-1);$\p
+\Else\p
+$DFS(level+1, k)$;\p
+\Endif\p
+$AvailableLetters[i].c++;$\p
+\Endfor\qq
+\Fini 
+
+ 
+ \section{Ex 3.29}
+ \subsection{}
+$A(n) = \theta{(n \log{n})};$
+ \subsection{}
+ $B(n) = \theta{(n \log{n})};$
+ \subsection{}
+ $C(n) = \theta{(n)};$
+ 
+  \subsection{}
+ $D(n) = \theta{(n)};$
+ 
+   \subsection{}
+ $E(n) = \theta{(n^2)};$
+ 
+    \subsection{}
+ $F(n) = \theta{(n^2)};$
+ 
+ 
+ 
+ 
+ \section{Ex 3.30}
+     \subsection{}
+     \begin{math}
+  \left\{
+    \begin{array}{l}
+      $T(1) = 1$             \qquad             if \: n \:  = \: 1;\\
+       $T(n) = 1+2T(n-1);$     \qquad      if  \: n  \: > \: 1;\\
+    \end{array}
+  \right.
+\end{math}
+
+ \subsection{}
+ 
+      \begin{math}
+  \left\{
+    \begin{array}{l}
+      $U(1) = 1$             \qquad             if \: n \:  = \: 1;\\
+       $U(n) = T(n-1)+2U(n-1);$     \qquad      if  \: n  \: > \: 1;\\
+    \end{array}
+  \right.
+\end{math}
+
+
+ \subsection{}
+ 
+ \begin{math}
+  \left\{
+    \begin{array}{l}
+      $W(1) = 1$             \qquad             if \: n \:  = \: 1;\\
+       $W(n) = 3W(n-1);$     \qquad      if  \: n  \: > \: 1;\\
+    \end{array}
+  \right.
+\end{math}
+
+ \section{Ex 4.1}
+ \subsection{}
+ Given two sequences A and B,  find subsequence with the largest count k for a that with indices $i1 < i2 < i3 <...<ik$ and $j1 < j2 < j3 <...<jk$ where $A[i1] = B[j1]$, $A[i2] = B[j2]$... and so on.
+
+\subsection{}
+  S(i, j) =
+   \begin{math}
+  \left\{
+    \begin{array}{l}
+      $0,$             \qquad             if \: i \:  = \: 0 \: or \: j\:  =\:  0\\
+      $S(i-1, j-1)+1,$             \qquad             if \: A[i] \:  = \: B[j];\\
+       $max(S(i-1, j), S(i, j-1)),$     \qquad         if \: A[i] \:  != \: B[j];\\
+    \end{array}
+  \right.
+\end{math}
+
+\section{Ex 4.2}
+ \subsection{}
+ Given a piece of wood and an value data array $Val[i, j]$ for $0<=i<j<n$;\\
+ find a count l and indices $i1$ to $ il$ that maximizes the value of $Val[0, i1]+ Val[i1, i2] +...+ Val[il, n].$
+
+\subsection{}
+  S(i) =
+   \begin{math}
+  \left\{
+    \begin{array}{l}
+     $0$             \qquad             if \:  i\:  = \: 0;\\
+       $max(Val[k,i]+S(k)); for all k that 0 =< k < i$     \qquad         if \: i \:  > \: 0;\\
+    \end{array}
+  \right.
+\end{math}
+
+
+\section{4.3}
+\subsection{}
+\Prog\qq
+\Global m, n A[1..n], B[1..m];\qq
+\Function{$Length$}{i, j}; \p
+\If i == 0 or j == 0 \Then\p
+\Return(0);\p
+\Endif]\p
+\If $A[i] == B[j]$ \Then\p
+temp = Length(i-1, j-1) +1;\p
+\Else\p
+temp = max(Length(i-1, j), Length(i, j-1));\p
+\Endif\p
+\Return(temp);\qq
+\Fini 
+
+\subsection{}
+\Prog\qq
+\Global m, n A[1..n], B[1..m];\qq
+\Global $Look[1..n,1..m]$ lookup table store subproblems's result  with initial value -1;\qq
+\Function{$Length$}{i, j}; \p
+\If i == 0 or j == 0 \Then\p
+\Return(0);\p
+\Endif]\p
+$temp \leftarrow Look[i, j];$\p
+\If $temp > -1 $ \Then\p
+\Return($temp$);\p
+\Endif\p
+\If $A[i] == B[j]$ \Then\p
+$temp \leftarrow Length(i-1, j-1) +1;$\p
+\Else\p
+$temp \leftarrow max(Length(i-1, j), Length(i, j-1));$\p
+\Endif\p
+$Look[i, j] \leftarrow temp;$\p
+\Return(temp);\qq
+\Fini 
+
+
+\section{Ex 4.4}
+
+\Prog\qq
+\Global m, n A[1..n], B[1..m];\qq
+\Global $Look[1..n,1..m]$ lookup table store subproblems's result  with initial value -1;\qq
+\Global $whereto[1..n,1..m]$ store subproblems's solution;\qq
+\Function{$Length$}{i, j}; \p
+\If i == 0 \Or j == 0 \Then\p
+\Return(0);\p
+\Endif]\p
+$temp \leftarrow Look[i, j];$\p
+\If $temp > -1 $ \Then\p
+\Return($temp$);\p
+\Endif\p
+\If $A[i] == B[j]$ \Then\p
+$temp \leftarrow Length(i-1, j-1) +1;$\p
+$(r, s) \leftarrow (i-1, j-1)$;\p
+\Elseif $Length(i-1, j) >  Length(i, j-1)$ \Then\p
+$temp \leftarrow Length(i-1, j);$\p
+$(r, s) \leftarrow (i-1, j)$;\p
+\Else\p
+$temp \leftarrow Length(i, j-1);$\p
+$(r, s) \leftarrow (i, j-1)$;\p
+\Endif\p
+$whereto[i, j] \leftarrow (r ,s)$;\p
+$Look[i, j] \leftarrow temp;$\p
+\Return(temp);\qq
+\Fini 
+
+
+
+\Prog\qq
+\Procedure{$PrintPath$}{i, j}; \p
+\If$i > 0 \And j > 0$ \Then\p
+$(r, s) \leftarrow whereto[i, j];$\p
+$PrintPath(r, s)$;\p
+\If $r == i-1 \And s == j-1$\Then\p
+$print(A[i]);$\p
+\Endif\p
+\Endif]\qq
+\Fini 
+
+
+
+
+
+
+
+ 
+
+\end{document}

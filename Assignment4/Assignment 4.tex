@@ -1,0 +1,292 @@
+%to produce a pdf, you type: pdflatex thissample
+\input{../latex-sample/00PRELIMS}  %loads 00PRELIMS.tex, which also loads zrogram.tex (all in same directory)
+
+
+\title{FA HW 4}
+\date{2017-10-07}
+\author{Xiaoyu Xue}
+
+\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
+\renewcommand{\thesection}{\arabic{section}}
+
+\begin{document}
+\maketitle
+
+\section{Ex 2.12}
+\subsection{}
+\Prog\qq
+\Global int $sum$ is all pre-visited vertices' dat;\qq
+\Procedure{$DFS$}{v}; \p
+$sum \leftarrow sum + v.dat$;\p
+$v.ans \leftarrow sum$;\p
+\Foreach vertex $w$ in $child[v]$ \Do\p
+$DFS(w);$\p
+\Endfor\qq
+\Fini 
+
+Initial Procedure Call:
+\Prog\qq
+\Procedure{$Driver$}{};\p
+$sum \leftarrow 0$;\p
+$DFS(T.root);$\qq
+\Fini
+
+\subsection{}
+\Prog\qq
+\Global int $sum$ is all pre-visited vertices' dat;\qq
+\Procedure{$DFS$}{v}; \p
+\Foreach vertex $w$ in $child[v]$ \Do\p
+$DFS(w);$\p
+\Endfor\p
+$sum \leftarrow sum + v.dat$;\p
+$v.ans \leftarrow sum$;\qq
+\Fini 
+
+Initial Procedure Call:
+\Prog\qq
+\Procedure{$Driver$}{};\p
+$sum \leftarrow 0;$\p
+$DFS(T.root);$\qq
+\Fini
+
+\subsection{}
+\Prog\qq
+\Global int $sum$ is all pre-visited vertices' dat;\qq
+\Procedure{$DFS$}{v}; \p
+$DFS(v.left);$\p
+$sum \leftarrow sum + v.dat$;\p
+$v.ans \leftarrow sum$;\p
+$DFS(v.right);$\qq
+\Fini 
+
+Initial Procedure Call:
+\Prog\qq
+\Procedure{$Driver$}{};\p
+$sum \leftarrow 0;$\p
+$DFS(T.root);$\qq
+\Fini
+
+
+\subsection{}
+\Prog\qq
+\Global int sum is all have not yet been pre-visited vertices' dat;\qq
+\Procedure{$DFS$}{v}; \p
+$sum \leftarrow sum - v.dat$;\p
+\Foreach vertex $w$ in $child[v]$ \Do\p
+$DFS(w);$\p
+\Endfor\p
+$v.ans \leftarrow sum$;\qq
+\Fini 
+
+\Prog\qq
+\Procedure{$initDFS$}{v}; \p
+$sum \leftarrow sum + v.dat$;\p
+\Foreach vertex $w$ in $child[v]$ \Do\p
+$DFS(w);$\p
+\Endfor\qq
+\Fini 
+
+Initial Procedure Call:
+\Prog\qq
+\Procedure{$Driver$}{};\p
+$sum \leftarrow 0;$\p
+$initDFS(T.root);$\qq
+$DFS(T.root);$\qq
+\Fini
+
+
+
+
+\subsection{}
+\Prog\qq
+\Global int $sum$ is all pre-visited vertices' dat;\qq
+\Procedure{$DFS$}{v}; \p
+$sum \leftarrow sum + v.dat$;\p
+\Foreach vertex $w$ in $child[v]$ \Do\p
+$DFS(w);$\p
+\Endfor\p
+$sum \leftarrow sum - v.dat$;\p
+$v.ans \leftarrow sum$;\qq
+\Fini 
+
+Initial Procedure Call:
+\Prog\qq
+\Procedure{$Driver$}{};\p
+$sum \leftarrow 0;$\p
+$DFS(T.root);$\qq
+\Fini
+
+
+
+
+\subsection{}
+Those vertices that have been preorder visited, but note postorder exited at the time that v is postorder exited, construct a path from the current vertex to the root of T.
+
+
+
+\section{Ex 3.17}
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth]{EX17.jpeg}
+  \caption{Exe 3.17 Solution.}
+  \label{fig:solution 3.17}
+\end{figure}
+
+\begin{math}
+  \left\{
+    \begin{array}{l}
+      $T(1) = 1$             \qquad             if \: n \:  = \: 1;\\
+      $T(n) = 2T(n/2) - 1$     \qquad      if  \: n  \: is \: even;\\
+      $T(n) = 2T((n-1)/2) + 1$    \quad   if  \: n \:  is \: odd;
+    \end{array}
+  \right.
+\end{math}
+
+
+\section{Ex 3.18}
+
+\subsection{}
+The special value should separate the equation , so it has $T(n) = 1024n + 2T(n/2)$ and $T(n/2) = 4(n/2)^2$  and  $T(n) = 4n^2$.
+\begin{equation}
+1024n + 4(n/2)^2 = 4n^2
+\end{equation}
+Hence, $n = 512$.
+
+
+\subsection{}
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth]{EX18.jpeg}
+  \caption{Exe 3.18 Solution.}
+  \label{fig:solution 3.18}
+\end{figure}
+So \quad $ T(n) = 1024n({\log_2 n} -7)$.
+
+
+\section{Ex 3.19}
+\subsection{}
+\begin{math}
+  \left\{
+    \begin{array}{l}
+      $L(0) = 2$             \qquad             if \: k \:  = \: 0;\\
+      $L(k) = 2 + 2L(k-1)$     \qquad      if  \: k  \: > \: 0;\\
+    \end{array}
+  \right.
+\end{math}
+
+\subsection{}
+\begin{math}
+  \left\{
+    \begin{array}{l}
+      $N(0) = 1$             \qquad             if \: k \:  = \: 0;\\
+      $N(k) = 3 + 4N(k-1)$     \qquad      if  \: k  \: > \: 0;\\
+    \end{array}
+  \right.
+\end{math}
+
+
+\subsection{}
+ 
+$L(k) = 2^{k}+2$     \qquad      if  \: k  \: > \: 0;\\
+$N(k) = 3+4^{k}$    \qquad      if  \: k  \: > \: 0;\\
+$S(k) = N(k)+1+2L(k)$
+
+
+\section{Ex 3.28}
+\subsection{}
+$A(n) = n{\log_2 n}+n$
+
+
+\subsection{}
+$B(n) = n{\log_3 n}+n$
+
+\subsection{}
+$C(n) = n^2{\log_2 n}+n^2$
+
+\subsection{}
+$D(n) = n^2{\log_3 n}+n^2$ 
+
+\subsection{}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{EX28e.jpeg}
+  \caption{Exe 3.28e Solution.}
+  \label{fig:solution 3.28e}
+\end{figure}
+
+\subsection{}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{EX28f.jpeg}
+  \caption{Exe 3.28f Solution.}
+  \label{fig:solution 3.28f}
+\end{figure}
+
+\subsection{}
+\subsection{}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{EX28gh.jpeg}
+  \caption{Exe 3.28gh Solution.}
+  \label{fig:solution 3.28gh}
+\end{figure}
+
+\subsection{}
+\subsection{}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{EX28ij.jpeg}
+  \caption{Exe 3.28ij Solution.}
+  \label{fig:solution 3.28ij}
+\end{figure}
+
+\subsection{}
+$K(n) = n^2({\log_3 n}-4) + 81*9^{{(\log_3 n} - 4}$
+
+\subsection{}
+$L(n) = {\log_9 n}\sqrt{n} +\sqrt{n} $
+
+\section{3.general}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{EXgeneral.jpeg}
+  \caption{Exe 3.general Solution.}
+  \label{fig:solution 3.general}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+\end{document}
